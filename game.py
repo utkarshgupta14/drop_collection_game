@@ -6,6 +6,7 @@ from scripts.entities import PhysicsEntity
 from scripts.drop import Drop
 from scripts.utils import *
 from scripts.head_movement import get_direction
+from scripts.score import Score
 
 head_stop_event = threading.Event()
 
@@ -31,7 +32,7 @@ class Game:
 
         self.drops = []
 
-        self.score = 0
+        self.score = Score()
         self.head_tilt = {'Val' : None}
         self.head_detection_thread = threading.Thread(target=get_direction, args=(head_stop_event, self.head_tilt))
         self.head_detection_thread.start()
@@ -48,13 +49,16 @@ class Game:
             # update drop positions and render
             for drop in self.drops:
                 if drop.check_collision(pygame.Rect(*self.penguin.pos, *self.penguin.size)):
-                    self.score+=1
+                    self.score.update(1)
                     self.drops.remove(drop)
                 if drop.check_boundary():
                     self.drops.remove(drop)
                 else:
                     drop.update_pos()
                     drop.render(self.display)
+
+            # render score
+            self.score.render(self.display)
 
             # add new drops
             if random.random() < 0.01:
