@@ -32,7 +32,7 @@ class Game:
 
         self.drops = []
 
-        self.score = Score()
+        self.score = Score(32, (340, 10))
         self.head_tilt = {'Val' : None}
         self.head_detection_thread = threading.Thread(target=get_direction, args=(head_stop_event, self.head_tilt))
         self.head_detection_thread.start()

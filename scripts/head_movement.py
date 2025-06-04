@@ -28,9 +28,9 @@ def get_direction(stop_event, tilt):
                     if right_eye.y == left_eye.y:
                         tilt['Val'] = 1
                     slope = (right_eye.y-left_eye.y) / (right_eye.x-left_eye.x)
-                    if slope > 0.2:
+                    if slope > 0.25:
                         tilt['Val'] = -1 # left
-                    elif slope < -0.2:
+                    elif slope < -0.25:
                         tilt['Val'] = 1 # right
                     else:
                         tilt['Val'] = 0
